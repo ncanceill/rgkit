@@ -60,7 +60,7 @@ def locs_around(loc, filter_out=None):
     return [loc for loc in _locs_around(loc) if
             len(filter_out & loc_types(loc)) == 0]
 
-def toward(curr, dest):
+def toward(curr, dest, nocheck=True):
     if curr == dest:
         return curr
 
@@ -70,9 +70,9 @@ def toward(curr, dest):
 
     if abs(x_diff) < abs(y_diff):
         yfirst = (x0, y0 + y_diff / abs(y_diff))
-        if walkable(yfirst):
+        if nocheck or walkable(yfirst):
             return yfirst
     xfirst = (x0 + x_diff / abs(x_diff), y0)
-    if walkable(xfirst):
+    if nocheck or walkable(xfirst):
         return xfirst
     return (x0, y0 + y_diff / abs(y_diff))
