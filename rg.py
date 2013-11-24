@@ -73,6 +73,6 @@ def toward(curr, dest, nocheck=True):
         if nocheck or walkable(yfirst):
             return yfirst
     xfirst = (x0 + x_diff / abs(x_diff), y0)
-    if nocheck or walkable(xfirst):
+    if nocheck or walkable(xfirst) or y_diff == 0:
         return xfirst
     return (x0, y0 + y_diff / abs(y_diff))
