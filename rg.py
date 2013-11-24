@@ -45,6 +45,10 @@ def loc_types(loc):
         types.add('obstacle')
     return types
 
+def walkable(loc):
+    t = loc_types(loc)
+    return 'normal' in t and 'obstacle' not in t
+
 @memodict
 def _locs_around(loc):
     x, y = loc
@@ -65,5 +69,10 @@ def toward(curr, dest):
     x_diff, y_diff = x - x0, y - y0
 
     if abs(x_diff) < abs(y_diff):
-        return (x0, y0 + y_diff / abs(y_diff))
-    return (x0 + x_diff / abs(x_diff), y0)
+        yfirst = (x0, y0 + y_diff / abs(y_diff))
+        if walkable(yfirst):
+            return yfirst
+    xfirst = (x0 + x_diff / abs(x_diff), y0)
+    if walkable(xfirst):
+        return xfirst
+    return (x0, y0 + y_diff / abs(y_diff))
